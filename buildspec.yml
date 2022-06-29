@@ -9,11 +9,10 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - echo Installing source NPM dependencies...
       - npm install
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=906603058356.dkr.ecr.us-east-1.amazonaws.com/node-demo:latest
+      - REPOSITORY_URI=906603058356.dkr.ecr.us-east-1.amazonaws.com/node-demo
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
