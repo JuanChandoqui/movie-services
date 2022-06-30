@@ -18,7 +18,7 @@ app.get('/api/peliculas', (req, res) => {
 router.get('/healthcheck', (req, res) => {
     const data = {
       uptime: process.uptime(),
-      message: 'ALL Ok healthcheck',
+      message: 'ALL Ok healthcheck in test',
       date: new Date()
     }
   
