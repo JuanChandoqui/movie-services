@@ -4,12 +4,12 @@ phases:
   install:
     runtime-versions:
       nodejs: 12
-    commands:
-      - n 16
   pre_build:
     commands:
-      - echo Installing source NPM dependencies...
-      - npm install
+      - echo Logging in to Docker Hub...
+      - DOCKER_USERNAME=193242
+      - DOCKER_PASSWORD=1denoviembre
+      - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
@@ -29,12 +29,8 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       - printf '[{"name":"node-demo","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - cat imagedefinitions.json
+
 artifacts:
   files:
-    - resources/*
-    - views/*
-    - index.js
-    - package.json
-    - node_modules/**/*
-    - imagedefinitions.json
+  - imagedefinitions.json
+  - 'node_modules/**/*'
